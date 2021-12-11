@@ -1,0 +1,13 @@
+#imageGrid {
+  padding: 50px;
+}
+
+#buttonDetail {
+  max-width: 150px;
+  max-height: 150px;
+  margin: 20px;
+}
+
+#buttonField {
+  max-width: 450px;
+}

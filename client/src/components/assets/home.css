@@ -1,0 +1,15 @@
+#topButton {
+  margin-right: 10px;
+}
+#midCenter {
+  min-height: 600px;
+  text-align: center;
+  margin-top: 3em;
+}
+
+h1.ui.inverted.header {
+  font-size: 4em;
+  margin-top: 3em;
+  margin-bottom: 0em;
+  font-weight: normal;
+}

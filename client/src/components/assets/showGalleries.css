@@ -1,0 +1,13 @@
+#card {
+  width: 450px;
+  text-align: center;
+  margin: 10px;
+}
+
+#alignedItem {
+  margin: 10px;
+}
+
+.header {
+  padding: 10px;
+}
