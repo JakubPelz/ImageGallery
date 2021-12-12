@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import ImageMain from '../components/assets/images/image-text.png';
 import '../components/assets/showGalleries.css';
 import { Link } from 'react-router-dom';
-import { ShowGalleries, Gallery } from '../reducers/actions';
+import { Gallery, ShowGalleries } from '../reducers/actions';
 
 const GalleriesShow = () => {
   const Galleries = useSelector<ShowGalleries, Gallery[]>(

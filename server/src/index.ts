@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 export const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 // bring routes
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ Credential: true, origin: ['http://localhost:3000'] }));
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // database
 mongoose

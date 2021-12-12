@@ -4,34 +4,32 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import '../components/assets/imageList.css';
 import ImageMain from '../components/assets/images/image-square.png';
 import '../components/assets/showDetail.css';
-import { Gallery, Image } from '../reducers/actions';
+import { getBasePath } from '../utils/PathHelper';
+import { Image } from '../reducers/actions';
 
 const ShowDetail = (props: any) => {
   const { id } = useParams();
   const [gallery_name, setGalleryName] = useState('');
   const [gallery_description, setGalleryDescription] = useState('');
-  const [photos, setPhotos] = useState([]);
-  /* const [photosId, setPhotosId] = useState(Number);
-  const [photosDate, setPhotosDate] = useState(Date); */
+  const [photos, setPhotos] = useState<Image[]>([]);
   const [galleryId, setID] = useState(Number);
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(
-        `http://localhost:8000/api/gallery/${id}`
-      );
+      const { data } = await axios.get(`${getBasePath()}/api/gallery/${id}`);
 
       setGalleryName(data.gallery_name);
       setGalleryDescription(data.gallery_description);
       setPhotos(data.photos);
       setID(data._id);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const del = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this Gallery?')) {
-      await axios.delete(`http://localhost:8000/api/gallery/${id}`);
+      await axios.delete(`${getBasePath()}/api/gallery/${id}`);
     }
     setRedirect(true);
   };
@@ -39,8 +37,6 @@ const ShowDetail = (props: any) => {
   if (redirect) {
     return <Navigate to={'/show-galleries'} />;
   }
-
-  console.log(photos);
 
   return (
     <>
@@ -72,14 +68,13 @@ const ShowDetail = (props: any) => {
       </div>
       <div className="ui grid center aligned segment" id="imageGrid">
         {photos.map((image, index) => {
-          console.log(image);
           return (
             <div className="three wide column" key={index}>
               <img
                 src={ImageMain}
                 className="ui small image"
                 id="alignedItem"
-                alt={image}
+                alt={`${image.register_date}`}
               />
             </div>
           );

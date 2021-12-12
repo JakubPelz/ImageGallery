@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../components/assets/showGalleries.css';
 import GalleriesShow from '../components/GalleriesShow';
 import { fetchGalleries, Gallery, ShowGalleries } from '../reducers/actions';
+import Pagination from '../components/Pagination';
 
 const ShowGallery = () => {
   const dispatch = useDispatch();
@@ -19,13 +20,15 @@ const ShowGallery = () => {
     <div>
       <div className="ui item center aligned segment">
         <h1>Display all Galleries</h1>
-        {Galleries.length}
+        "Total galleries uploaded: {Galleries.length}"
       </div>
-      <div className="ui grid center aligned segment">
-        <GalleriesShow />
-      </div>
+      {
+        <div className="ui grid center aligned segment">
+          <GalleriesShow />
+        </div>
+      }
       <div className="ui item center aligned segment">
-        Here will be paginator
+        <Pagination ItemsPerPage={10} />
       </div>
     </div>
   );

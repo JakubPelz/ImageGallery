@@ -26,6 +26,7 @@ var galleryRoutes = function (router) {
 };
 exports.galleryRoutes = galleryRoutes;
 var imageRoutes = function (router) {
-    router.post('/api/photo', upload.array('image'), image_controller_1.UploadImage);
+    router.post('/api/photo', image_controller_1.UploadImage);
+    router.get('/api/photos/:path', image_controller_1.ShowImages);
 };
 exports.imageRoutes = imageRoutes;

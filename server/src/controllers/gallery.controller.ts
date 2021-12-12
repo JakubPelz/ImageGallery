@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 const Gallery = require('../models/Gallery');
 import { GalleryValidation } from '../validation/gallery.validation';
+const faker = require('faker');
 
 export const CreateGallery = async (req: Request, res: Response) => {
   const body = req.body;

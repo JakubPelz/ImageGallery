@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { SyntheticEvent, useState } from 'react';
 import '../components/assets/createGallery.css';
 import { Navigate } from 'react-router-dom';
+import { getBasePath } from '../utils/PathHelper';
 
 const Home: React.FunctionComponent<{}> = (props) => {
   const [gallery_name, setGalleryName] = useState('');
@@ -11,7 +12,7 @@ const Home: React.FunctionComponent<{}> = (props) => {
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await axios.post('http://localhost:8000/api/create-gallery', {
+    await axios.post(`${getBasePath()}/api/create-gallery`, {
       gallery_name,
       gallery_description,
     });

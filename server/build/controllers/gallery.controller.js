@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteGallery = exports.UpdateGallery = exports.GetGallery = exports.ShowGalleries = exports.CreateGallery = void 0;
 var Gallery = require('../models/Gallery');
 var gallery_validation_1 = require("../validation/gallery.validation");
+var faker = require('faker');
 var CreateGallery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var body, error, newGallery;
     return __generator(this, function (_a) {

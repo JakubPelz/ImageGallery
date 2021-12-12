@@ -10,4 +10,4 @@ var ImageSchema = new __1.mongoose.Schema({
         default: Date.now,
     },
 });
-module.exports = Image = __1.mongoose.model('image', ImageSchema);
+module.exports = __1.mongoose.model('Image', ImageSchema);

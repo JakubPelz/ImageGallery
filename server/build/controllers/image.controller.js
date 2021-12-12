@@ -36,13 +36,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UploadImage = void 0;
-/* import multer from 'multer';
-const upload = multer({ dest: 'uploads/' }); */
+exports.ShowImages = exports.UploadImage = void 0;
+var fs = require('fs');
+var stream = require('stream');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        console.log(req.files, req.body);
+        // @ts-ignore
+        console.log(req.files.file);
         return [2 /*return*/];
     });
 }); };
 exports.UploadImage = UploadImage;
+var ShowImages = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var imagePath, r, ps;
+    return __generator(this, function (_a) {
+        imagePath = req.params.path;
+        r = fs.createReadStream(process.cwd() + "/images/" + imagePath);
+        console.log('r', r);
+        ps = new stream.PassThrough();
+        stream.pipeline(r, ps, // <---- this makes a trick with stream error handling
+        function (err) {
+            if (err) {
+                console.log(err); // No such file or any other kind of error
+                return res.sendStatus(400);
+            }
+        });
+        ps.pipe(res);
+        return [2 /*return*/];
+    });
+}); };
+exports.ShowImages = ShowImages;

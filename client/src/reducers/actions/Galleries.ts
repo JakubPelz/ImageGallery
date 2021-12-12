@@ -3,9 +3,9 @@ import { ActionTypes } from './types';
 import axios from 'axios';
 
 export interface Image {
-  adress: String;
+  address: string;
   register_date: Date;
-  _id: Number;
+  _id: number;
 }
 
 export interface Gallery {
@@ -34,6 +34,6 @@ export const fetchGalleries = () => {
       type: ActionTypes.fetchGalleries,
       payload: response.data,
     });
-    /* console.log(response.data); */
+    console.log(response.data);
   };
 };

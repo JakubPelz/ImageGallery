@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 exports.mongoose = require('mongoose');
+var fileUpload = require('express-fileupload');
 require('dotenv').config();
 // bring routes
 var routes_1 = require("./routes/routes");
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ Credential: true, origin: ['http://localhost:3000'] }));
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(fileUpload());
 // database
 exports.mongoose
     .connect(process.env.DATABASE_LOCAL, {

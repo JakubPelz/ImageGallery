@@ -1,7 +1,8 @@
 import Home from './pages/Home';
+
 import {
   BrowserRouter,
-  BrowserRouter as Router, //@typescript-eslint/no-unused-vars
+  BrowserRouter as Router,
   Route,
   Routes,
 } from 'react-router-dom';

@@ -1,6 +1,7 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Navigate } from 'react-router-dom';
+import { getBasePath } from '../utils/PathHelper';
 
 const EditGallery = () => {
   const { id } = useParams();
@@ -12,21 +13,19 @@ const EditGallery = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(
-        `http://localhost:8000/api/gallery/${id}`
-      );
+      const { data } = await axios.get(`${getBasePath()}/api/gallery/${id}`);
 
       setGalleryName(data.gallery_name);
       setGalleryDescription(data.gallery_description);
       setPhotos(data.photos);
       setID(data._id);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(photos);
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await axios.put(`http://localhost:8000/api/gallery/${id}`, {
+    await axios.put(`${getBasePath()}/api/gallery/${id}`, {
       gallery_name,
       gallery_description,
       photos,
@@ -78,7 +77,19 @@ const EditGallery = () => {
                         type="file"
                         name="image"
                         multiple
-                        onChange={(e) => setPhotos(e.target.value)}
+                        onChange={async (e) => {
+                          const formData = new FormData();
+                          // @ts-ignore
+                          formData.append('file', e.target.files[0]);
+                          try {
+                            await axios.post(
+                              `${getBasePath()}/api/photo`,
+                              formData
+                            );
+                          } catch (e) {
+                            console.log('e', e);
+                          }
+                        }}
                       />
                       Add Images
                     </div>
