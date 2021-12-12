@@ -2,11 +2,17 @@ import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 import axios from 'axios';
 
+export interface Image {
+  adress: String;
+  register_date: Date;
+  _id: Number;
+}
+
 export interface Gallery {
   _id: number;
   gallery_name: string;
   gallery_description: string;
-  photos: [];
+  photos: [Image];
 }
 
 export interface FetchGalleriesAction {

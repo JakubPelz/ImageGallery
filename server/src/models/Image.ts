@@ -1,6 +1,5 @@
 import { mongoose } from '..';
 
-// Create Schema
 const ImageSchema = new mongoose.Schema({
   address: {
     type: String,
@@ -8,10 +7,6 @@ const ImageSchema = new mongoose.Schema({
   register_date: {
     type: Date,
     default: Date.now,
-  },
-  address_id: {
-    type: String,
-    unique: true,
   },
 });
 

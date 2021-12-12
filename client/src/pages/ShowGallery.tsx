@@ -21,7 +21,7 @@ const ShowGallery = () => {
         <h1>Display all Galleries</h1>
         {Galleries.length}
       </div>
-      <div className="ui grid">
+      <div className="ui grid center aligned segment">
         <GalleriesShow />
       </div>
       <div className="ui item center aligned segment">

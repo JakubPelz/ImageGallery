@@ -29,7 +29,7 @@ exports.mongoose
 //Import Routes
 (0, routes_1.routes)(app);
 (0, routes_1.galleryRoutes)(app);
-(0, routes_1.photoRoutes)(app);
+(0, routes_1.imageRoutes)(app);
 // port
 var port = process.env.PORT || 8000;
 app.listen(port, function () {

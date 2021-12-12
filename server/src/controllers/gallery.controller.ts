@@ -14,7 +14,6 @@ export const CreateGallery = async (req: Request, res: Response) => {
   let newGallery = Gallery({
     gallery_name: body.gallery_name,
     gallery_description: body.gallery_description,
-    photos: body.photos,
   });
   await newGallery.save((err: String) => {
     if (err) {
@@ -32,15 +31,21 @@ export const ShowGalleries = async (req: Request, res: Response) => {
   /* const pageLimit = 9;
   const page = parseInt((req.query.page as string) || '1'); */
 
-  const showGallery = await Gallery.find({});
+  const showGalleries = await Gallery.find({});
   /*  .limit(pageLimit)
     .skip(pageLimit * page); */
 
-  res.json(showGallery);
+  res.json(showGalleries);
 };
 
 export const GetGallery = async (req: Request, res: Response) => {
-  res.send(await Gallery.findById(req.params.id));
+  try {
+    const gallery = await Gallery.findById({ _id: req.params.id });
+    res.send(gallery);
+  } catch {
+    res.status(404);
+    res.send({ error: "Gallery doeasn't exist." });
+  }
 };
 
 export const UpdateGallery = async (req: Request, res: Response, next: any) => {
@@ -49,11 +54,15 @@ export const UpdateGallery = async (req: Request, res: Response, next: any) => {
     const gallery = await Gallery.findById({ _id: req.params.id });
 
     if (body.gallery_description) {
-      gallery_description: body.gallery_description;
+      gallery.gallery_description = body.gallery_description;
     }
 
     if (body.gallery_name) {
-      gallery_name: body.gallery_name;
+      gallery.gallery_name = body.gallery_name;
+    }
+
+    if (body.photos) {
+      gallery.photos = body.photos;
     }
 
     await gallery.save();

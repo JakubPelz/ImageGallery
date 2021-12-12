@@ -6,7 +6,7 @@ const EditGallery = () => {
   const { id } = useParams();
   const [gallery_name, setGalleryName] = useState('');
   const [gallery_description, setGalleryDescription] = useState('');
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState({});
   const [galleryId, setID] = useState(Number);
   const [redirect, setRedirect] = useState(false);
 
@@ -22,7 +22,7 @@ const EditGallery = () => {
       setID(data._id);
     })();
   }, []);
-
+  console.log(photos);
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -32,10 +32,11 @@ const EditGallery = () => {
       photos,
       galleryId,
     });
+    setRedirect(true);
   };
 
   if (redirect) {
-    return <Navigate to={`/gallery/edit/${id}`} />;
+    return <Navigate to={'/show-galleries'} />;
   }
 
   return (
@@ -45,7 +46,11 @@ const EditGallery = () => {
           <div className="ui stackable inverted divided grid">
             <div className="eight wide column">
               <div className="ui left aligned container">
-                <form className="ui form" onSubmit={submit}>
+                <form
+                  className="ui form"
+                  onSubmit={submit}
+                  encType="multipart/form-data"
+                >
                   <div className="field">
                     <label>Gallery Name</label>
                     <input
@@ -65,6 +70,18 @@ const EditGallery = () => {
                       placeholder={gallery_description}
                       onChange={(e) => setGalleryDescription(e.target.value)}
                     />
+                  </div>
+                  <div>
+                    Upload Image
+                    <div>
+                      <input
+                        type="file"
+                        name="image"
+                        multiple
+                        onChange={(e) => setPhotos(e.target.value)}
+                      />
+                      Add Images
+                    </div>
                   </div>
                   <button className="ui button" type="submit" id="submit">
                     Submit

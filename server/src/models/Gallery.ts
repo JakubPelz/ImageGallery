@@ -1,5 +1,15 @@
 import { mongoose } from '..';
 
+const ImageSchema = new mongoose.Schema({
+  address: {
+    type: String,
+  },
+  register_date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const gallerySchema = new mongoose.Schema({
   gallery_name: {
     type: String,
@@ -10,7 +20,7 @@ const gallerySchema = new mongoose.Schema({
   gallery_description: {
     type: String,
   },
-  photos: [],
+  photos: [ImageSchema],
 });
 
 module.exports = mongoose.model('Gallery', gallerySchema);

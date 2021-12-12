@@ -52,7 +52,6 @@ var CreateGallery = function (req, res) { return __awaiter(void 0, void 0, void 
                 newGallery = Gallery({
                     gallery_name: body.gallery_name,
                     gallery_description: body.gallery_description,
-                    photos: body.photos,
                 });
                 return [4 /*yield*/, newGallery.save(function (err) {
                         if (err) {
@@ -72,30 +71,37 @@ var CreateGallery = function (req, res) { return __awaiter(void 0, void 0, void 
 }); };
 exports.CreateGallery = CreateGallery;
 var ShowGalleries = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var showGallery;
+    var showGalleries;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, Gallery.find({})];
             case 1:
-                showGallery = _a.sent();
+                showGalleries = _a.sent();
                 /*  .limit(pageLimit)
                   .skip(pageLimit * page); */
-                res.json(showGallery);
+                res.json(showGalleries);
                 return [2 /*return*/];
         }
     });
 }); };
 exports.ShowGalleries = ShowGalleries;
 var GetGallery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var gallery, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _b = (_a = res).send;
-                return [4 /*yield*/, Gallery.findById(req.params.id)];
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
             case 1:
-                _b.apply(_a, [_c.sent()]);
-                return [2 /*return*/];
+                gallery = _b.sent();
+                res.send(gallery);
+                return [3 /*break*/, 3];
+            case 2:
+                _a = _b.sent();
+                res.status(404);
+                res.send({ error: "Gallery doeasn't exist." });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
@@ -113,10 +119,13 @@ var UpdateGallery = function (req, res, next) { return __awaiter(void 0, void 0,
             case 2:
                 gallery = _b.sent();
                 if (body.gallery_description) {
-                    gallery_description: body.gallery_description;
+                    gallery.gallery_description = body.gallery_description;
                 }
                 if (body.gallery_name) {
-                    gallery_name: body.gallery_name;
+                    gallery.gallery_name = body.gallery_name;
+                }
+                if (body.photos) {
+                    gallery.photos = body.photos;
                 }
                 return [4 /*yield*/, gallery.save()];
             case 3:

@@ -7,7 +7,7 @@ export const mongoose = require('mongoose');
 require('dotenv').config();
 
 // bring routes
-import { routes, galleryRoutes, photoRoutes } from './routes/routes';
+import { routes, galleryRoutes, imageRoutes } from './routes/routes';
 // app
 const app = express();
 
@@ -30,7 +30,7 @@ mongoose
 //Import Routes
 routes(app);
 galleryRoutes(app);
-photoRoutes(app);
+imageRoutes(app);
 
 // port
 const port = process.env.PORT || 8000;

@@ -23,17 +23,16 @@ const GalleriesShow = () => {
                     id="alignedItem"
                     alt={gallery.gallery_name}
                   />
-                  "{gallery.gallery_name}"
+                </div>
+                <div>
+                  <h3>"{gallery.gallery_name}"</h3>
                 </div>
                 <div className="description" id="alignedItem">
                   {gallery.gallery_description}
                 </div>
-                <div className="ui two bottom attached buttons">
-                  <Link to={`/gallery/${gallery._id}`}>
-                    <div className="ui button">Show Gallery Details</div>
-                  </Link>
-                  <div className="ui button">Add Photo</div>
-                </div>
+                <Link to={`/gallery/${gallery._id}`}>
+                  <div className="ui button">Show Gallery Details</div>
+                </Link>
               </div>
             </div>
           </div>

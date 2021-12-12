@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { response, Router } from 'express';
 import {
   Register,
   Login,
@@ -12,7 +12,10 @@ import {
   UpdateGallery,
   GetGallery,
 } from '../controllers/gallery.controller';
-import { UploadPhoto } from '../controllers/photo.controller';
+import { UploadImage } from '../controllers/image.controller';
+import multer from 'multer';
+import { storage } from '../cloudinary/index';
+const upload = multer({ storage });
 
 export const routes = (router: Router) => {
   router.post('/api/register', Register);
@@ -26,9 +29,9 @@ export const galleryRoutes = (router: Router) => {
   router.get('/api/show-galleries', ShowGalleries);
   router.get('/api/gallery/:id', GetGallery);
   router.put('/api/gallery/:id', UpdateGallery);
-  router.delete('/api/gallery/:id/delete', DeleteGallery);
+  router.delete('/api/gallery/:id', DeleteGallery);
 };
 
-export const photoRoutes = (router: Router) => {
-  router.post('/api/photo', UploadPhoto);
+export const imageRoutes = (router: Router) => {
+  router.post('/api/photo', upload.array('image'), UploadImage);
 };

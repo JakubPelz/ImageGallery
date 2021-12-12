@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import '../components/assets/imageList.css';
 import ImageMain from '../components/assets/images/image-square.png';
 import '../components/assets/showDetail.css';
+import { Gallery, Image } from '../reducers/actions';
 
 const ShowDetail = (props: any) => {
   const { id } = useParams();
   const [gallery_name, setGalleryName] = useState('');
   const [gallery_description, setGalleryDescription] = useState('');
   const [photos, setPhotos] = useState([]);
+  /* const [photosId, setPhotosId] = useState(Number);
+  const [photosDate, setPhotosDate] = useState(Date); */
   const [galleryId, setID] = useState(Number);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -25,35 +29,52 @@ const ShowDetail = (props: any) => {
     })();
   }, []);
 
+  const del = async (id: number) => {
+    if (window.confirm('Are you sure you want to delete this Gallery?')) {
+      await axios.delete(`http://localhost:8000/api/gallery/${id}`);
+    }
+    setRedirect(true);
+  };
+
+  if (redirect) {
+    return <Navigate to={'/show-galleries'} />;
+  }
+
+  console.log(photos);
+
   return (
     <>
       <div className="ui vertical footer segment">
         <div className="ui container">
           <div className="content">
-            <div className="header">"{gallery_name}"</div>
+            <div className="header">
+              <h3>{gallery_name}</h3>
+            </div>
             <div className="description" id="alignedItem">
               {gallery_description}
             </div>
           </div>
           <div className="ui bottom attached buttons" id="buttonField">
-            <button className="ui button" id="buttonDetail">
-              Add Images
-            </button>
             <Link to={`/gallery/edit/${galleryId}`}>
               <button className="ui button" id="buttonDetail">
-                Edit Gallery
+                Edit Gallery || Add Image
               </button>
             </Link>
-            <button className="ui button" id="buttonDetail">
+            <button
+              className="ui button"
+              id="buttonDetail"
+              onClick={() => del(galleryId)}
+            >
               Delete Gallery
             </button>
           </div>
         </div>
       </div>
-      <div className="ui grid" id="imageGrid">
-        {photos.map((image) => {
+      <div className="ui grid center aligned segment" id="imageGrid">
+        {photos.map((image, index) => {
+          console.log(image);
           return (
-            <div className="three wide column" key={image}>
+            <div className="three wide column" key={index}>
               <img
                 src={ImageMain}
                 className="ui small image"

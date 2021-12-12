@@ -1,6 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var __1 = require("..");
+var ImageSchema = new __1.mongoose.Schema({
+    address: {
+        type: String,
+    },
+    register_date: {
+        type: Date,
+        default: Date.now,
+    },
+});
 var gallerySchema = new __1.mongoose.Schema({
     gallery_name: {
         type: String,
@@ -11,6 +20,6 @@ var gallerySchema = new __1.mongoose.Schema({
     gallery_description: {
         type: String,
     },
-    photos: [],
+    photos: [ImageSchema],
 });
 module.exports = __1.mongoose.model('Gallery', gallerySchema);
