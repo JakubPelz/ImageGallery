@@ -76,7 +76,7 @@ const EditGallery = () => {
                       <input
                         type="file"
                         name="image"
-                        multiple
+                        //multiple
                         onChange={async (e) => {
                           const formData = new FormData();
                           // @ts-ignore

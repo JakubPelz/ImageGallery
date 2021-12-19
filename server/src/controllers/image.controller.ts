@@ -1,11 +1,21 @@
 import { Request, Response } from 'express';
+import { Db } from 'mongodb';
+import { mongoose } from '..';
 const fs = require('fs');
 const stream = require('stream');
+const Gallery = require('../models/Gallery');
+const { createReadStream, createWriteStream } = require('fs');
+const path = require('path');
 
 export const UploadImage = async (req: Request, res: Response) => {
   // @ts-ignore
+
+  // @ts-ignore
   console.log(req.files.file);
   // @ts-ignore
+  console.log(req.files.file.name);
+  // @ts-ignore
+  console.log(req.files.file.path);
 };
 
 export const ShowImages = async (req: Request, res: Response) => {
@@ -25,4 +35,17 @@ export const ShowImages = async (req: Request, res: Response) => {
   );
   ps.pipe(res);
   // <---- this makes a trick with stream error handling
+};
+
+export const DeletePhoto = async (req: Request, res: Response) => {
+  console.log(req.body);
+  /* try {
+    await Gallery.update(
+      { 'photos._id': req.params.id },
+      { $pull: { 'photos.$.id': req.params.id } }
+    );
+  } catch {
+    res.status(404);
+    res.send({ error: "Image doesn't exist." });
+  } */
 };

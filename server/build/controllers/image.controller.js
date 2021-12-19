@@ -36,13 +36,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShowImages = exports.UploadImage = void 0;
+exports.DeletePhoto = exports.ShowImages = exports.UploadImage = void 0;
 var fs = require('fs');
 var stream = require('stream');
+var Gallery = require('../models/Gallery');
+var _a = require('fs'), createReadStream = _a.createReadStream, createWriteStream = _a.createWriteStream;
+var path = require('path');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         // @ts-ignore
+        // @ts-ignore
         console.log(req.files.file);
+        // @ts-ignore
+        console.log(req.files.file.name);
+        // @ts-ignore
+        console.log(req.files.file.path);
         return [2 /*return*/];
     });
 }); };
@@ -66,3 +74,10 @@ var ShowImages = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.ShowImages = ShowImages;
+var DeletePhoto = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        console.log(req.body);
+        return [2 /*return*/];
+    });
+}); };
+exports.DeletePhoto = DeletePhoto;

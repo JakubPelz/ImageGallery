@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../components/assets/showGalleries.css';
 import GalleriesShow from '../components/GalleriesShow';
 import { fetchGalleries, Gallery, ShowGalleries } from '../reducers/actions';
 import Pagination from '../components/Pagination';
+import Search from '../components/Search';
 
 const ShowGallery = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [galleriesPerPage] = useState(10);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,83 +19,30 @@ const ShowGallery = () => {
     (state) => state.galleries
   );
 
+  //Pagination
+  const indexOfLastPost = currentPage * galleriesPerPage;
+  const indexOfFirstPost = indexOfLastPost - galleriesPerPage;
+  const currentGalleries = Galleries.slice(indexOfFirstPost, indexOfLastPost);
+  // @ts-ignore
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div>
       <div className="ui item center aligned segment">
         <h1>Display all Galleries</h1>
         "Total galleries uploaded: {Galleries.length}"
-      </div>
-      {
-        <div className="ui grid center aligned segment">
-          <GalleriesShow />
+        <Search />
+        <div className="ui item grid center aligned segment">
+          <GalleriesShow galleries={currentGalleries} />
         </div>
-      }
-      <div className="ui item center aligned segment">
-        <Pagination ItemsPerPage={10} />
+        <Pagination
+          postsPerPage={galleriesPerPage}
+          totalPosts={Galleries.length}
+          paginate={paginate}
+        />
       </div>
     </div>
   );
 };
 
 export default ShowGallery;
-
-/* const _ShowGalleries: FC<ShowGalleryProps> = ({ galleries }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGalleries());
-  }, [dispatch]);
-
-  const Galleries = galleries;
-
-  return (
-    <div>
-      <div className="ui item center aligned segment">
-        <h1>Display all Galleries</h1>
-      </div>
-      <div className="ui grid">
-        {Galleries.map((gallery: Gallery) => {
-          return (
-            <div className="five wide column" key={gallery.id}>
-              <div className="ui card" id="card">
-                <div className="content">
-                  <div className="header">
-                    <img
-                      src={ImageMain}
-                      className="ui small image"
-                      id="alignedItem"
-                      alt={gallery.gallery_name}
-                    />
-                    "{gallery.gallery_name}"
-                  </div>
-                  <div className="description" id="alignedItem">
-                    {gallery.gallery_description}
-                  </div>
-                  <div className="ui two bottom attached buttons">
-                    <div className="ui button">Edit Gallery</div>
-                    <div className="ui button">Add Photo</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="ui item center aligned segment">
-        Here will be paginator
-      </div>
-    </div>
-  );
-};
-
-const mapStateToProps = ({
-  galleries,
-}: StoreState): { galleries: Gallery[] } => {
-  return { galleries };
-};
-
-export const ShowGallery = connect(mapStateToProps, {
-  fetchGalleries,
-})(_ShowGalleries);
-
-export default ShowGallery; */

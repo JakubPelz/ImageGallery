@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import '../components/assets/imageList.css';
-import ImageMain from '../components/assets/images/image-square.png';
 import '../components/assets/showDetail.css';
 import { getBasePath } from '../utils/PathHelper';
 import { Image } from '../reducers/actions';
+import Pagination from './Pagination';
+import DisplayPhotos from './DisplayPhotos';
 
 const ShowDetail = (props: any) => {
   const { id } = useParams();
@@ -14,6 +15,8 @@ const ShowDetail = (props: any) => {
   const [photos, setPhotos] = useState<Image[]>([]);
   const [galleryId, setID] = useState(Number);
   const [redirect, setRedirect] = useState(false);
+  const [, /* currentPage */ setCurrentPage] = useState(1);
+  const [galleriesPerPage] = useState(10);
 
   useEffect(() => {
     (async () => {
@@ -37,6 +40,13 @@ const ShowDetail = (props: any) => {
   if (redirect) {
     return <Navigate to={'/show-galleries'} />;
   }
+
+  //Pagination
+  //const indexOfLastPost = currentPage * galleriesPerPage;
+  //const indexOfFirstPost = indexOfLastPost - galleriesPerPage;
+  //const currentGalleries = photos.slice(indexOfFirstPost, indexOfLastPost);
+  // @ts-ignore
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -66,20 +76,12 @@ const ShowDetail = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="ui grid center aligned segment" id="imageGrid">
-        {photos.map((image, index) => {
-          return (
-            <div className="three wide column" key={index}>
-              <img
-                src={ImageMain}
-                className="ui small image"
-                id="alignedItem"
-                alt={`${image.register_date}`}
-              />
-            </div>
-          );
-        })}
-      </div>
+      <DisplayPhotos photos={photos} />
+      <Pagination
+        postsPerPage={galleriesPerPage}
+        totalPosts={photos.length}
+        paginate={paginate}
+      />
     </>
   );
 };

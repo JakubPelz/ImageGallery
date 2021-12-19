@@ -12,10 +12,11 @@ import {
   UpdateGallery,
   GetGallery,
 } from '../controllers/gallery.controller';
-import { UploadImage, ShowImages } from '../controllers/image.controller';
-import multer from 'multer';
-import { storage } from '../cloudinary/index';
-const upload = multer({ storage });
+import {
+  UploadImage,
+  ShowImages,
+  DeletePhoto,
+} from '../controllers/image.controller';
 
 export const routes = (router: Router) => {
   router.post('/api/register', Register);
@@ -35,4 +36,5 @@ export const galleryRoutes = (router: Router) => {
 export const imageRoutes = (router: Router) => {
   router.post('/api/photo', UploadImage);
   router.get('/api/photos/:path', ShowImages);
+  router.delete('/api/photo/', DeletePhoto);
 };

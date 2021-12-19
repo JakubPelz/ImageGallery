@@ -1,41 +1,34 @@
-/* import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { ShowGalleries, Gallery } from '../reducers/actions';
-import ReactPaginate from 'react-paginate';
-import axios from 'axios';
-import { getBasePath } from '../utils/PathHelper'; */
 interface IPagination {
-  Pages?: number;
-  ItemsPerPage: number;
+  postsPerPage: number;
+  totalPosts: number;
+  paginate: any;
 }
 
-const Pagination = ({ Pages, ItemsPerPage }: IPagination) => {
-  /*   const [galleries, setGalleries] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [galleriesPerPage] = useState(10);
+const Pagination = (props: IPagination) => {
+  const pageNumbers = [];
 
-  useEffect(() => {
-    const fetchGalleries = async () => {
-      setLoading(true);
-      const res = await axios.get(`${getBasePath()}/api/show-galleries`);
-      setGalleries(res.data);
-      setLoading(false);
-    };
-    fetchGalleries();
-  }, []);
+  for (let i = 1; i <= Math.ceil(props.totalPosts / props.postsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
-  //Get current galleries
-  const indexOfLastGallery = pageNumber * galleriesPerPage;
-  const indexOfFirstGallery = indexOfLastGallery - galleriesPerPage;
-  const currentGalleries = galleries.slice(
-    indexOfFirstGallery,
-    indexOfLastGallery
+  return (
+    <nav>
+      <div className="ui inverted vertical center aligned segment">
+        <div className="ui container">
+          {pageNumbers.map((number) => (
+            <button
+              className="ui inverted button"
+              id="topButton"
+              onClick={() => props.paginate(number)}
+              key={number}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
   );
- */
-  //Change page
-
-  return <div>{ItemsPerPage}</div>;
 };
 
 export default Pagination;

@@ -34,6 +34,6 @@ export const fetchGalleries = () => {
       type: ActionTypes.fetchGalleries,
       payload: response.data,
     });
-    console.log(response.data);
+    /*   console.log(response.data); */
   };
 };

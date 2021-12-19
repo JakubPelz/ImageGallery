@@ -1,17 +1,12 @@
-import { useSelector } from 'react-redux';
 import ImageMain from '../components/assets/images/image-text.png';
 import '../components/assets/showGalleries.css';
 import { Link } from 'react-router-dom';
 import { Gallery, ShowGalleries } from '../reducers/actions';
 
-const GalleriesShow = () => {
-  const Galleries = useSelector<ShowGalleries, Gallery[]>(
-    (state) => state.galleries
-  );
-
+const GalleriesShow = (props: ShowGalleries) => {
   return (
     <>
-      {Galleries.map((gallery: Gallery) => {
+      {props.galleries.map((gallery: Gallery) => {
         return (
           <div className="five wide column" key={gallery._id}>
             <div className="ui card" id="card">

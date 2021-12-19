@@ -1,15 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.imageRoutes = exports.galleryRoutes = exports.routes = void 0;
 var auth_controller_1 = require("../controllers/auth.controller");
 var gallery_controller_1 = require("../controllers/gallery.controller");
 var image_controller_1 = require("../controllers/image.controller");
-var multer_1 = __importDefault(require("multer"));
-var index_1 = require("../cloudinary/index");
-var upload = (0, multer_1.default)({ storage: index_1.storage });
 var routes = function (router) {
     router.post('/api/register', auth_controller_1.Register);
     router.post('/api/login', auth_controller_1.Login);
@@ -28,5 +22,6 @@ exports.galleryRoutes = galleryRoutes;
 var imageRoutes = function (router) {
     router.post('/api/photo', image_controller_1.UploadImage);
     router.get('/api/photos/:path', image_controller_1.ShowImages);
+    router.delete('/api/photo/', image_controller_1.DeletePhoto);
 };
 exports.imageRoutes = imageRoutes;
