@@ -38,7 +38,7 @@ export const ShowImages = async (req: Request, res: Response) => {
 };
 
 export const DeletePhoto = async (req: Request, res: Response) => {
-  console.log(req.body);
+  console.log(req.params);
   /* try {
     await Gallery.update(
       { 'photos._id': req.params.id },

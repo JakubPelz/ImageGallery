@@ -76,7 +76,7 @@ var ShowImages = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 exports.ShowImages = ShowImages;
 var DeletePhoto = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        console.log(req.body);
+        console.log(req.params);
         return [2 /*return*/];
     });
 }); };

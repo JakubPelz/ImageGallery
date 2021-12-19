@@ -1,27 +1,25 @@
+import { useState, useEffect } from 'react';
 import { Image } from '../reducers/actions';
 import ImageMain from '../components/assets/images/image-square.png';
 import axios from 'axios';
 import { getBasePath } from '../utils/PathHelper';
+import { useParams } from 'react-router-dom';
 
 export interface IShowPhotos {
   photos: Image[];
 }
 const DisplayPhotos = (props: IShowPhotos) => {
-  const del = async (id: number) => {
-    if (window.confirm('Are you sure you want to delete this Photo?')) {
-      const det = await axios.get(`${getBasePath()}/api/photo/${id}`, {
-        params: {
-          id,
-        },
-      });
-      console.log(det);
-      /* .then((res) => {
-          let newImage = props.photos.filter((item) => item._id !== id);
+  const [pageId, setPageId] = useState<any>();
+  const { id } = useParams();
 
-        })
-        .catch((error) => {
-          console.log(error);
-        }); */
+  useEffect(() => {
+    setPageId(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const del = async (id: any) => {
+    if (window.confirm('Are you sure you want to delete this Photo?')) {
+      await axios.delete(`${getBasePath()}/api/gallery/${pageId}/photo/${id}`);
     }
   };
   return (
