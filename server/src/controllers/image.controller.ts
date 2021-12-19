@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Db } from 'mongodb';
 import { mongoose } from '..';
+import { GalleryValidation } from '../validation/gallery.validation';
 const fs = require('fs');
 const stream = require('stream');
 const Gallery = require('../models/Gallery');
@@ -38,14 +39,23 @@ export const ShowImages = async (req: Request, res: Response) => {
 };
 
 export const DeletePhoto = async (req: Request, res: Response) => {
-  console.log(req.params);
-  /* try {
-    await Gallery.update(
-      { 'photos._id': req.params.id },
-      { $pull: { 'photos.$.id': req.params.id } }
+  try {
+    const gallery = await Gallery.findById({ _id: req.params.id }); // předá do vyhledávání ID galerie
+    const imageIndex = gallery.photos.findIndex(
+      (photo: any) => photo.id === req.params.idPhoto
     );
+
+    if (imageIndex < 0) {
+      res.status(404);
+      res.send({ error: "Photo doesn't exist." });
+    }
+
+    gallery.photos.splice(imageIndex, 1);
+
+    await gallery.save();
+    res.send(gallery);
   } catch {
     res.status(404);
-    res.send({ error: "Image doesn't exist." });
-  } */
+    res.send({ error: "Gallery doeasn't exist." });
+  }
 };

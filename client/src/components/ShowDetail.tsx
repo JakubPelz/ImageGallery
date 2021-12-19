@@ -15,7 +15,7 @@ const ShowDetail = (props: any) => {
   const [photos, setPhotos] = useState<Image[]>([]);
   const [galleryId, setID] = useState(Number);
   const [redirect, setRedirect] = useState(false);
-  const [, /* currentPage */ setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [galleriesPerPage] = useState(10);
 
   useEffect(() => {
@@ -42,9 +42,9 @@ const ShowDetail = (props: any) => {
   }
 
   //Pagination
-  //const indexOfLastPost = currentPage * galleriesPerPage;
-  //const indexOfFirstPost = indexOfLastPost - galleriesPerPage;
-  //const currentGalleries = photos.slice(indexOfFirstPost, indexOfLastPost);
+  const indexOfLastPost = currentPage * galleriesPerPage;
+  const indexOfFirstPost = indexOfLastPost - galleriesPerPage;
+  const currentGalleries = photos.slice(indexOfFirstPost, indexOfLastPost);
   // @ts-ignore
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -59,24 +59,30 @@ const ShowDetail = (props: any) => {
             <div className="description" id="alignedItem">
               {gallery_description}
             </div>
+            <p style={{ paddingLeft: 10 }}>
+              "In the gallery is <strong>{photos.length}</strong> uploaded
+              photos for now."
+            </p>
           </div>
-          <div className="ui bottom attached buttons" id="buttonField">
-            <Link to={`/gallery/edit/${galleryId}`}>
-              <button className="ui button" id="buttonDetail">
-                Edit Gallery || Add Image
+          <div className="ui item center aligned segment">
+            <div className="ui bottom attached buttons" id="buttonField">
+              <Link to={`/gallery/edit/${galleryId}`}>
+                <button className="ui button" id="buttonDetail">
+                  Edit Gallery || Add Image
+                </button>
+              </Link>
+              <button
+                className="ui button"
+                id="buttonDetail"
+                onClick={() => del(galleryId)}
+              >
+                Delete Gallery
               </button>
-            </Link>
-            <button
-              className="ui button"
-              id="buttonDetail"
-              onClick={() => del(galleryId)}
-            >
-              Delete Gallery
-            </button>
+            </div>
           </div>
         </div>
       </div>
-      <DisplayPhotos photos={photos} />
+      <DisplayPhotos photos={currentGalleries} />
       <Pagination
         postsPerPage={galleriesPerPage}
         totalPosts={photos.length}

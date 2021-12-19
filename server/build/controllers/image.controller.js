@@ -75,9 +75,32 @@ var ShowImages = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.ShowImages = ShowImages;
 var DeletePhoto = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        console.log(req.params);
-        return [2 /*return*/];
+    var gallery, imageIndex, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
+            case 1:
+                gallery = _b.sent();
+                imageIndex = gallery.photos.findIndex(function (photo) { return photo.id === req.params.idPhoto; });
+                if (imageIndex < 0) {
+                    res.status(404);
+                    res.send({ error: "Photo doesn't exist." });
+                }
+                gallery.photos.splice(imageIndex, 1);
+                return [4 /*yield*/, gallery.save()];
+            case 2:
+                _b.sent();
+                res.send(gallery);
+                return [3 /*break*/, 4];
+            case 3:
+                _a = _b.sent();
+                res.status(404);
+                res.send({ error: "Gallery doeasn't exist." });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
     });
 }); };
 exports.DeletePhoto = DeletePhoto;
