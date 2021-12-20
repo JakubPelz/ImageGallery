@@ -64,7 +64,7 @@ const ShowDetail = (props: any) => {
               photos for now."
             </p>
           </div>
-          <div className="ui item center aligned segment">
+          <div className="">
             <div className="ui bottom attached buttons" id="buttonField">
               <Link to={`/gallery/edit/${galleryId}`}>
                 <button className="ui button" id="buttonDetail">
@@ -79,6 +79,25 @@ const ShowDetail = (props: any) => {
                 Delete Gallery
               </button>
             </div>
+            <form
+              className="ui form"
+              encType="multipart/form-data"
+              method="POST"
+              style={{ paddingLeft: 20 }}
+            >
+              <div className="field">
+                <input
+                  type="file"
+                  name="images"
+                  multiple
+                  style={{ maxWidth: 250 }}
+                />
+              </div>
+
+              <button className="ui button" type="submit">
+                Upload
+              </button>
+            </form>
           </div>
         </div>
       </div>

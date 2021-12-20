@@ -62,15 +62,17 @@ const EditGallery = () => {
                   </div>
                   <div className="field">
                     <label>Gallery Description</label>
-                    <input
-                      type="text"
-                      name="gallery_description"
-                      id="gallery_description"
-                      placeholder={gallery_description}
-                      onChange={(e) => setGalleryDescription(e.target.value)}
-                    />
+                    {
+                      <input
+                        type="text"
+                        name="gallery_description"
+                        id="gallery_description"
+                        placeholder={gallery_description}
+                        onChange={(e) => setGalleryDescription(e.target.value)}
+                      />
+                    }
                   </div>
-                  <div>
+                  {/* <div>
                     Upload Image
                     <div>
                       <input
@@ -93,7 +95,7 @@ const EditGallery = () => {
                       />
                       Add Images
                     </div>
-                  </div>
+                  </div> */}
                   <button className="ui button" type="submit" id="submit">
                     Submit
                   </button>

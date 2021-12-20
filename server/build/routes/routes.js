@@ -4,6 +4,7 @@ exports.imageRoutes = exports.galleryRoutes = exports.routes = void 0;
 var auth_controller_1 = require("../controllers/auth.controller");
 var gallery_controller_1 = require("../controllers/gallery.controller");
 var image_controller_1 = require("../controllers/image.controller");
+var multer_1 = require("../middleware/multer");
 var routes = function (router) {
     router.post('/api/register', auth_controller_1.Register);
     router.post('/api/login', auth_controller_1.Login);
@@ -20,7 +21,7 @@ var galleryRoutes = function (router) {
 };
 exports.galleryRoutes = galleryRoutes;
 var imageRoutes = function (router) {
-    router.post('/api/photo', image_controller_1.UploadImage);
+    router.post('/api/photo', multer_1.upload.single('image'), image_controller_1.UploadImage);
     router.get('/api/photos/:path', image_controller_1.ShowImages);
     router.delete('/api/gallery/:id/photo/:idPhoto', image_controller_1.DeletePhoto);
 };

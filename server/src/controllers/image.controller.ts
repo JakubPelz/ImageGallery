@@ -9,14 +9,9 @@ const { createReadStream, createWriteStream } = require('fs');
 const path = require('path');
 
 export const UploadImage = async (req: Request, res: Response) => {
+  res.send('image uploaded');
   // @ts-ignore
-
-  // @ts-ignore
-  console.log(req.files.file);
-  // @ts-ignore
-  console.log(req.files.file.name);
-  // @ts-ignore
-  console.log(req.files.file.path);
+  //console.log(req.files.file);
 };
 
 export const ShowImages = async (req: Request, res: Response) => {
@@ -40,7 +35,7 @@ export const ShowImages = async (req: Request, res: Response) => {
 
 export const DeletePhoto = async (req: Request, res: Response) => {
   try {
-    const gallery = await Gallery.findById({ _id: req.params.id }); // předá do vyhledávání ID galerie
+    const gallery = await Gallery.findById({ _id: req.params.id }); // search ID gallery
     const imageIndex = gallery.photos.findIndex(
       (photo: any) => photo.id === req.params.idPhoto
     );

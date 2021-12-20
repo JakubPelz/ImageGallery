@@ -23,8 +23,8 @@ const ShowGallery = () => {
   const indexOfLastPost = currentPage * galleriesPerPage;
   const indexOfFirstPost = indexOfLastPost - galleriesPerPage;
   const currentGalleries = Galleries.slice(indexOfFirstPost, indexOfLastPost);
-  // @ts-ignore
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
 
   return (
     <div>

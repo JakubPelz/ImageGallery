@@ -44,13 +44,7 @@ var _a = require('fs'), createReadStream = _a.createReadStream, createWriteStrea
 var path = require('path');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        // @ts-ignore
-        // @ts-ignore
-        console.log(req.files.file);
-        // @ts-ignore
-        console.log(req.files.file.name);
-        // @ts-ignore
-        console.log(req.files.file.path);
+        res.send('image uploaded');
         return [2 /*return*/];
     });
 }); };

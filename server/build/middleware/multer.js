@@ -1,17 +1,15 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.upload = void 0;
+var path = require('path');
 var multer = require('multer');
-// set storage
 var storage = multer.diskStorage({
-    // @ts-ignore
-    destination: function (req, file, cb) {
-        cb(null, 'uploads');
+    destination: function (req, file, callback) {
+        callback(null, '../images');
     },
-    // @ts-ignore
-    filename: function (req, file, cb) {
-        // image.jpg
-        var ext = file.originalname.substr(file.originalname.lastIndexOf('.'));
-        cb(null, file.fieldname + '-' + Date.now() + ext);
+    filename: function (req, file, callback) {
+        console.log(file);
+        callback(null, Date.now() + path.extname(file.originalname));
     },
 });
-// @ts-ignore
-module.exports = store = multer({ storage: storage });
+exports.upload = multer({ storate: storage });
