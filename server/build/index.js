@@ -9,6 +9,7 @@ var cors = require('cors');
 exports.mongoose = require('mongoose');
 var fileUpload = require('express-fileupload');
 require('dotenv').config();
+//try MULTER
 // bring routes
 var routes_1 = require("./routes/routes");
 // app

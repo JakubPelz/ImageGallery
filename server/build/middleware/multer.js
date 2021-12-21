@@ -1,15 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.upload = void 0;
-var path = require('path');
-var multer = require('multer');
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, '../images');
+var multer_1 = __importDefault(require("multer"));
+var path_1 = __importDefault(require("path"));
+var storage = multer_1.default.diskStorage({
+    destination: function (request, file, callback) {
+        callback(null, '../images/');
     },
     filename: function (req, file, callback) {
-        console.log(file);
-        callback(null, Date.now() + path.extname(file.originalname));
+        callback(null, Date.now() + path_1.default.extname(file.originalname));
     },
 });
-exports.upload = multer({ storate: storage });
+exports.upload = (0, multer_1.default)({ storage: storage });

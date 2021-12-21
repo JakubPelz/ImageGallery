@@ -9,9 +9,9 @@ const { createReadStream, createWriteStream } = require('fs');
 const path = require('path');
 
 export const UploadImage = async (req: Request, res: Response) => {
-  res.send('image uploaded');
+  res.send('Image post');
   // @ts-ignore
-  //console.log(req.files.file);
+  console.log(req.files.file);
 };
 
 export const ShowImages = async (req: Request, res: Response) => {

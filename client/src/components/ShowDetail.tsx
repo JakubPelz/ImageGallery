@@ -44,7 +44,7 @@ const ShowDetail = (props: any) => {
   //Pagination
   const indexOfLastPost = currentPage * galleriesPerPage;
   const indexOfFirstPost = indexOfLastPost - galleriesPerPage;
-  const currentGalleries = photos.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPhotos = photos.slice(indexOfFirstPost, indexOfLastPost);
   // @ts-ignore
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -79,11 +79,12 @@ const ShowDetail = (props: any) => {
                 Delete Gallery
               </button>
             </div>
-            <form
+            {/*       <form
               className="ui form"
               encType="multipart/form-data"
               method="POST"
               style={{ paddingLeft: 20 }}
+              onSubmit={submit}
             >
               <div className="field">
                 <input
@@ -91,17 +92,28 @@ const ShowDetail = (props: any) => {
                   name="images"
                   multiple
                   style={{ maxWidth: 250 }}
+                  onChange={async (e) => {
+                    const formData = new FormData();
+                    // @ts-ignore
+                    formData.append('file', e.target.files[0]);
+                    try {
+                      await axios.post(`${getBasePath()}/api/photo`, formData);
+                    } catch (e) {
+                      console.log('e', e);
+                      console.log(formData);
+                    }
+                  }}
                 />
               </div>
 
               <button className="ui button" type="submit">
                 Upload
               </button>
-            </form>
+            </form> */}
           </div>
         </div>
       </div>
-      <DisplayPhotos photos={currentGalleries} />
+      <DisplayPhotos photos={currentPhotos} />
       <Pagination
         postsPerPage={galleriesPerPage}
         totalPosts={photos.length}

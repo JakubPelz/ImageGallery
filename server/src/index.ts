@@ -7,6 +7,8 @@ export const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
+//try MULTER
+
 // bring routes
 import { routes, galleryRoutes, imageRoutes } from './routes/routes';
 // app
