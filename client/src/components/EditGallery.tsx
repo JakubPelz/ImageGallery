@@ -82,18 +82,12 @@ const EditGallery = () => {
                           multiple
                           onChange={async (e) => {
                             const formData = new FormData();
-                            const config = {
-                              headers: {
-                                'content-type': 'multipart/form-data',
-                              },
-                            };
                             // @ts-ignore
                             formData.append('file', e.target.files[0]);
                             try {
                               await axios.post(
                                 `${getBasePath()}/api/photo`,
-                                formData,
-                                config
+                                formData
                               );
                             } catch (e) {
                               console.log('e', e);

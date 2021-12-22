@@ -1,17 +1,60 @@
 import { Request, Response } from 'express';
-import { Db } from 'mongodb';
-import { mongoose } from '..';
-import { GalleryValidation } from '../validation/gallery.validation';
 const fs = require('fs');
 const stream = require('stream');
 const Gallery = require('../models/Gallery');
-const { createReadStream, createWriteStream } = require('fs');
-const path = require('path');
+
+export interface imagePost {
+  name: string;
+  data: any;
+  size: number;
+  encoding: string;
+  tempFilePath: string;
+  truncated: boolean;
+  mimetype: string;
+  md5: string;
+  mv: any;
+}
+
+export interface files {
+  images: [imagePost];
+}
 
 export const UploadImage = async (req: Request, res: Response) => {
-  res.send('Image post');
   // @ts-ignore
   console.log(req.files.file);
+  try {
+    if (!req.files) {
+      res.send({
+        status: false,
+        message: 'No file uploaded',
+      });
+    } else {
+      // Use name of the input field to retrive the uploaded field
+      // @ts-ignore
+      let file = req.files.file;
+      //Use the mv() method to place the file in upload directory (i.e. "uploads")
+      file.mv('./images/' + file.filename);
+
+      //send response
+      res.send({
+        status: true,
+        message: 'File is uploaded',
+        data: {
+          name: file.filename,
+          data: file.data,
+          size: file.size,
+          encoding: file.encoding,
+          tempFilePath: file.tempFilePath,
+          truncated: file.truncated,
+          mimetype: file.mimetype,
+          md5: file.md5,
+          mv: file.mv,
+        },
+      });
+    }
+  } catch (err) {
+    res.status(500).send(err);
+  }
 };
 
 export const ShowImages = async (req: Request, res: Response) => {

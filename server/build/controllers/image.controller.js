@@ -40,13 +40,43 @@ exports.DeletePhoto = exports.ShowImages = exports.UploadImage = void 0;
 var fs = require('fs');
 var stream = require('stream');
 var Gallery = require('../models/Gallery');
-var _a = require('fs'), createReadStream = _a.createReadStream, createWriteStream = _a.createWriteStream;
-var path = require('path');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var file;
     return __generator(this, function (_a) {
-        res.send('Image post');
         // @ts-ignore
         console.log(req.files.file);
+        try {
+            if (!req.files) {
+                res.send({
+                    status: false,
+                    message: 'No file uploaded',
+                });
+            }
+            else {
+                file = req.files.file;
+                //Use the mv() method to place the file in upload directory (i.e. "uploads")
+                file.mv('./images/' + file.filename);
+                //send response
+                res.send({
+                    status: true,
+                    message: 'File is uploaded',
+                    data: {
+                        name: file.filename,
+                        data: file.data,
+                        size: file.size,
+                        encoding: file.encoding,
+                        tempFilePath: file.tempFilePath,
+                        truncated: file.truncated,
+                        mimetype: file.mimetype,
+                        md5: file.md5,
+                        mv: file.mv,
+                    },
+                });
+            }
+        }
+        catch (err) {
+            res.status(500).send(err);
+        }
         return [2 /*return*/];
     });
 }); };

@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var cors = require('cors');
 exports.mongoose = require('mongoose');
 var fileUpload = require('express-fileupload');
+var _ = require('lodash');
 require('dotenv').config();
 //try MULTER
 // bring routes
@@ -21,7 +22,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ Credential: true, origin: ['http://localhost:3000'] }));
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(fileUpload());
+//enable files upload
+app.use(fileUpload({
+    createParentPath: true,
+}));
 // database
 exports.mongoose
     .connect(process.env.DATABASE_LOCAL, {

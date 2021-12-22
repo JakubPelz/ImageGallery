@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 export const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const _ = require('lodash');
 require('dotenv').config();
 
 //try MULTER
@@ -21,7 +22,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ Credential: true, origin: ['http://localhost:3000'] }));
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(fileUpload());
+
+//enable files upload
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
 // database
 mongoose

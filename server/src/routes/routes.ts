@@ -17,7 +17,6 @@ import {
   ShowImages,
   DeletePhoto,
 } from '../controllers/image.controller';
-import { upload } from '../middleware/multer';
 
 export const routes = (router: Router) => {
   router.post('/api/register', Register);
@@ -35,7 +34,7 @@ export const galleryRoutes = (router: Router) => {
 };
 
 export const imageRoutes = (router: Router) => {
-  router.post('/api/photo', upload.single('image'), UploadImage);
+  router.post('/api/photo', UploadImage);
   router.get('/api/photos/:path', ShowImages);
   router.delete('/api/gallery/:id/photo/:idPhoto', DeletePhoto);
 };
