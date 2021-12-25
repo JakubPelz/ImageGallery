@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 const fs = require('fs');
 const stream = require('stream');
 const Gallery = require('../models/Gallery');
+const Image = require('../models/Image');
 
 export interface imagePost {
   name: string;
@@ -32,15 +33,19 @@ export const UploadImage = async (req: Request, res: Response) => {
       // Use name of the input field to retrive the uploaded field
       // @ts-ignore
       let file = req.files.file;
+      let newImage = Image({
+        address: file.name,
+      });
+      await newImage.save();
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
-      file.mv('./images/' + file.filename);
+      file.mv('./images/' + file.name);
 
       //send response
       res.send({
         status: true,
         message: 'File is uploaded',
         data: {
-          name: file.filename,
+          name: file.name,
           data: file.data,
           size: file.size,
           encoding: file.encoding,
@@ -74,6 +79,11 @@ export const ShowImages = async (req: Request, res: Response) => {
   );
   ps.pipe(res);
   // <---- this makes a trick with stream error handling
+};
+
+export const ShowAllImages = async (req: Request, res: Response) => {
+  const showImages = await Image.find({});
+  res.json(showImages);
 };
 
 export const DeletePhoto = async (req: Request, res: Response) => {

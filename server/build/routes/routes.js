@@ -22,6 +22,7 @@ exports.galleryRoutes = galleryRoutes;
 var imageRoutes = function (router) {
     router.post('/api/photo', image_controller_1.UploadImage);
     router.get('/api/photos/:path', image_controller_1.ShowImages);
+    router.get('/api/images', image_controller_1.ShowAllImages);
     router.delete('/api/gallery/:id/photo/:idPhoto', image_controller_1.DeletePhoto);
 };
 exports.imageRoutes = imageRoutes;

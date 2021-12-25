@@ -10,11 +10,22 @@ export interface IShowPhotos {
 }
 const DisplayPhotos = (props: IShowPhotos) => {
   const [pageId, setPageId] = useState<string>();
+  const [images, setImages] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     setPageId(id);
   }, [id]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(`${getBasePath()}/api/images`);
+      setImages(data);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(images);
 
   const del = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this Photo?')) {
