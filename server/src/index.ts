@@ -8,8 +8,6 @@ const fileUpload = require('express-fileupload');
 const _ = require('lodash');
 require('dotenv').config();
 
-//try MULTER
-
 // bring routes
 import { routes, galleryRoutes, imageRoutes } from './routes/routes';
 // app
@@ -22,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ Credential: true, origin: ['http://localhost:3000'] }));
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(express.static('images'));
 
 //enable files upload
 app.use(

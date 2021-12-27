@@ -20,9 +20,10 @@ var galleryRoutes = function (router) {
 };
 exports.galleryRoutes = galleryRoutes;
 var imageRoutes = function (router) {
-    router.post('/api/photo', image_controller_1.UploadImage);
+    router.post('/api/:id/photo', image_controller_1.UploadImage);
     router.get('/api/photos/:path', image_controller_1.ShowImages);
     router.get('/api/images', image_controller_1.ShowAllImages);
-    router.delete('/api/gallery/:id/photo/:idPhoto', image_controller_1.DeletePhoto);
+    router.delete('/api/gallery/:id/photo/:idPhoto', image_controller_1.DeletePhotoFromGallery);
+    router.delete('/api/photo/:id', image_controller_1.DeletePhotoFromGallery);
 };
 exports.imageRoutes = imageRoutes;

@@ -9,5 +9,8 @@ var ImageSchema = new __1.mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    gallery_id: {
+        type: String,
+    },
 });
 module.exports = __1.mongoose.model('Image', ImageSchema);

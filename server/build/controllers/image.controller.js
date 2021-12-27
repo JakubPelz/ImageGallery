@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeletePhoto = exports.ShowAllImages = exports.ShowImages = exports.UploadImage = void 0;
+exports.DeletePhotoFromGallery = exports.DeletePhotoFromImages = exports.ShowAllImages = exports.ShowImages = exports.UploadImage = void 0;
 var fs = require('fs');
 var stream = require('stream');
 var Gallery = require('../models/Gallery');
@@ -46,24 +46,21 @@ var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                // @ts-ignore
-                console.log(req.files.file);
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 5, , 6]);
-                if (!!req.files) return [3 /*break*/, 2];
+                _a.trys.push([0, 4, , 5]);
+                if (!!req.files) return [3 /*break*/, 1];
                 res.send({
                     status: false,
                     message: 'No file uploaded',
                 });
-                return [3 /*break*/, 4];
-            case 2:
+                return [3 /*break*/, 3];
+            case 1:
                 file = req.files.file;
                 newImage = Image({
                     address: file.name,
+                    gallery_id: req.params.id,
                 });
                 return [4 /*yield*/, newImage.save()];
-            case 3:
+            case 2:
                 _a.sent();
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 file.mv('./images/' + file.name);
@@ -83,13 +80,15 @@ var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
                         mv: file.mv,
                     },
                 });
-                _a.label = 4;
-            case 4: return [3 /*break*/, 6];
-            case 5:
+                _a.label = 3;
+            case 3: return [3 /*break*/, 5];
+            case 4:
                 err_1 = _a.sent();
                 res.status(500).send(err_1);
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5:
+                console.log(req.params.id);
+                return [2 /*return*/];
         }
     });
 }); };
@@ -99,7 +98,6 @@ var ShowImages = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     return __generator(this, function (_a) {
         imagePath = req.params.path;
         r = fs.createReadStream(process.cwd() + "/images/" + imagePath);
-        console.log('r', r);
         ps = new stream.PassThrough();
         stream.pipeline(r, ps, // <---- this makes a trick with stream error handling
         function (err) {
@@ -126,33 +124,30 @@ var ShowAllImages = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.ShowAllImages = ShowAllImages;
-var DeletePhoto = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var gallery, imageIndex, _a;
+var DeletePhotoFromImages = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/];
+    });
+}); };
+exports.DeletePhotoFromImages = DeletePhotoFromImages;
+var DeletePhotoFromGallery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, Image.deleteOne({ _id: req.params.id })];
             case 1:
-                gallery = _b.sent();
-                imageIndex = gallery.photos.findIndex(function (photo) { return photo.id === req.params.idPhoto; });
-                if (imageIndex < 0) {
-                    res.status(404);
-                    res.send({ error: "Photo doesn't exist." });
-                }
-                gallery.photos.splice(imageIndex, 1);
-                return [4 /*yield*/, gallery.save()];
-            case 2:
                 _b.sent();
-                res.send(gallery);
-                return [3 /*break*/, 4];
-            case 3:
+                res.status(204).send();
+                return [3 /*break*/, 3];
+            case 2:
                 _a = _b.sent();
                 res.status(404);
-                res.send({ error: "Gallery doeasn't exist." });
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                res.send({ error: "Image doesn't exist." });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.DeletePhoto = DeletePhoto;
+exports.DeletePhotoFromGallery = DeletePhotoFromGallery;

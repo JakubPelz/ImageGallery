@@ -15,7 +15,8 @@ import {
 import {
   UploadImage,
   ShowImages,
-  DeletePhoto,
+  DeletePhotoFromGallery,
+  DeletePhotoFromImages,
   ShowAllImages,
 } from '../controllers/image.controller';
 
@@ -35,8 +36,9 @@ export const galleryRoutes = (router: Router) => {
 };
 
 export const imageRoutes = (router: Router) => {
-  router.post('/api/photo', UploadImage);
+  router.post('/api/:id/photo', UploadImage);
   router.get('/api/photos/:path', ShowImages);
   router.get('/api/images', ShowAllImages);
-  router.delete('/api/gallery/:id/photo/:idPhoto', DeletePhoto);
+  router.delete('/api/gallery/:id/photo/:idPhoto', DeletePhotoFromGallery);
+  router.delete('/api/photo/:id', DeletePhotoFromGallery);
 };

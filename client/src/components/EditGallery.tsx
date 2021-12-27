@@ -3,12 +3,28 @@ import axios from 'axios';
 import { useParams, Navigate } from 'react-router-dom';
 import { getBasePath } from '../utils/PathHelper';
 
+export interface imagePost {
+  name: string;
+  data: any;
+  size: number;
+  encoding: string;
+  tempFilePath: string;
+  truncated: boolean;
+  mimetype: string;
+  md5: string;
+  mv: any;
+}
+
+export interface files {
+  images: [imagePost];
+}
+
 const EditGallery = () => {
   const { id } = useParams();
   const [gallery_name, setGalleryName] = useState('');
   const [gallery_description, setGalleryDescription] = useState('');
   const [photos, setPhotos] = useState({});
-  const [galleryId, setID] = useState(Number);
+  const [galleryId, setID] = useState(String);
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
@@ -22,6 +38,7 @@ const EditGallery = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -37,6 +54,17 @@ const EditGallery = () => {
   if (redirect) {
     return <Navigate to={'/show-galleries'} />;
   }
+
+  const onChange = async (e: any) => {
+    const formData = new FormData();
+    // @ts-ignore
+    formData.append('file', e.target.files[0]);
+    try {
+      await axios.post(`${getBasePath()}/api/${galleryId}/photo`, formData);
+    } catch (e) {
+      console.log('e', e);
+    }
+  };
 
   return (
     <div>
@@ -80,7 +108,8 @@ const EditGallery = () => {
                           type="file"
                           name="image"
                           multiple
-                          onChange={async (e) => {
+                          onChange={onChange}
+                          /* async (e) => {
                             const formData = new FormData();
                             // @ts-ignore
                             formData.append('file', e.target.files[0]);
@@ -92,7 +121,7 @@ const EditGallery = () => {
                             } catch (e) {
                               console.log('e', e);
                             }
-                          }}
+                          } */
                         />
                         Add Images
                       </div>

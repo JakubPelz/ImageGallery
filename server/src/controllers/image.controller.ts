@@ -22,7 +22,7 @@ export interface files {
 
 export const UploadImage = async (req: Request, res: Response) => {
   // @ts-ignore
-  console.log(req.files.file);
+  //console.log(req.files.file);
   try {
     if (!req.files) {
       res.send({
@@ -35,6 +35,7 @@ export const UploadImage = async (req: Request, res: Response) => {
       let file = req.files.file;
       let newImage = Image({
         address: file.name,
+        gallery_id: req.params.id,
       });
       await newImage.save();
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
@@ -60,12 +61,14 @@ export const UploadImage = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).send(err);
   }
+  console.log(req.params.id);
 };
 
 export const ShowImages = async (req: Request, res: Response) => {
   const imagePath = req.params.path;
   const r = fs.createReadStream(`${process.cwd()}/images/${imagePath}`); // or any other way to get a readable stream
-  console.log('r', r);
+  //const r = fs.createReadStream(`${process.cwd()}/images/2918574.png`); //${process.cwd()/images/img.jpg}
+  //console.log('r', r);
   const ps = new stream.PassThrough(); // <---- this makes a trick with stream error handling
   stream.pipeline(
     r,
@@ -86,8 +89,8 @@ export const ShowAllImages = async (req: Request, res: Response) => {
   res.json(showImages);
 };
 
-export const DeletePhoto = async (req: Request, res: Response) => {
-  try {
+export const DeletePhotoFromImages = async (req: Request, res: Response) => {
+  /*   try {
     const gallery = await Gallery.findById({ _id: req.params.id }); // search ID gallery
     const imageIndex = gallery.photos.findIndex(
       (photo: any) => photo.id === req.params.idPhoto
@@ -105,5 +108,15 @@ export const DeletePhoto = async (req: Request, res: Response) => {
   } catch {
     res.status(404);
     res.send({ error: "Gallery doeasn't exist." });
+  } */
+};
+
+export const DeletePhotoFromGallery = async (req: Request, res: Response) => {
+  try {
+    await Image.deleteOne({ _id: req.params.id });
+    res.status(204).send();
+  } catch {
+    res.status(404);
+    res.send({ error: "Image doesn't exist." });
   }
 };

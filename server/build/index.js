@@ -10,7 +10,6 @@ exports.mongoose = require('mongoose');
 var fileUpload = require('express-fileupload');
 var _ = require('lodash');
 require('dotenv').config();
-//try MULTER
 // bring routes
 var routes_1 = require("./routes/routes");
 // app
@@ -22,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ Credential: true, origin: ['http://localhost:3000'] }));
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(exports.express.static('images'));
 //enable files upload
 app.use(fileUpload({
     createParentPath: true,

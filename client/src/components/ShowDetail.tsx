@@ -24,7 +24,25 @@ const ShowDetail = (props: any) => {
 
       setGalleryName(data.gallery_name);
       setGalleryDescription(data.gallery_description);
-      setPhotos(data.photos);
+      setID(data._id);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(`${getBasePath()}/api/images`);
+      setPhotos(data);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(`${getBasePath()}/api/gallery/${id}`);
+
+      setGalleryName(data.gallery_name);
+      setGalleryDescription(data.gallery_description);
       setID(data._id);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,37 +97,6 @@ const ShowDetail = (props: any) => {
                 Delete Gallery
               </button>
             </div>
-            {/*       <form
-              className="ui form"
-              encType="multipart/form-data"
-              method="POST"
-              style={{ paddingLeft: 20 }}
-              onSubmit={submit}
-            >
-              <div className="field">
-                <input
-                  type="file"
-                  name="images"
-                  multiple
-                  style={{ maxWidth: 250 }}
-                  onChange={async (e) => {
-                    const formData = new FormData();
-                    // @ts-ignore
-                    formData.append('file', e.target.files[0]);
-                    try {
-                      await axios.post(`${getBasePath()}/api/photo`, formData);
-                    } catch (e) {
-                      console.log('e', e);
-                      console.log(formData);
-                    }
-                  }}
-                />
-              </div>
-
-              <button className="ui button" type="submit">
-                Upload
-              </button>
-            </form> */}
           </div>
         </div>
       </div>
