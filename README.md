@@ -13,6 +13,6 @@
 The Application uses Node.js, Express
 
 
-### 2) TFront-End of the application
+### 2) Front-End of the application
 
 The Appllication uses React and Redux
