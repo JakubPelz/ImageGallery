@@ -62,14 +62,16 @@ export const UpdateGallery = async (req: Request, res: Response, next: any) => {
     }
 
     if (body.photos) {
-      gallery.photos = body.photos;
+      gallery.photos = {
+        address: req.body.name,
+      };
     }
 
     await gallery.save();
     res.send(gallery);
   } catch {
     res.status(404);
-    res.send({ error: "Gallery doeasn't exist." });
+    res.send({ error: "Gallery doesn't exist." });
   }
 };
 

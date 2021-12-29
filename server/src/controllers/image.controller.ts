@@ -24,6 +24,7 @@ export const UploadImage = async (req: Request, res: Response) => {
   // @ts-ignore
   //console.log(req.files.file);
   try {
+    const gallery = await Gallery.findById({ _id: req.params.id });
     if (!req.files) {
       res.send({
         status: false,
@@ -39,6 +40,14 @@ export const UploadImage = async (req: Request, res: Response) => {
       });
       await newImage.save();
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
+
+      //save Image to Gallery subCollection
+      gallery.photos.push({
+        address: file.name,
+      });
+
+      await gallery.save();
+
       file.mv('./images/' + file.name);
 
       //send response

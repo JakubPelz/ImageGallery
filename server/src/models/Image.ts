@@ -1,4 +1,3 @@
-import { number } from 'joi';
 import { mongoose } from '..';
 
 const ImageSchema = new mongoose.Schema({

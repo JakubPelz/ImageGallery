@@ -125,7 +125,9 @@ var UpdateGallery = function (req, res, next) { return __awaiter(void 0, void 0,
                     gallery.gallery_name = body.gallery_name;
                 }
                 if (body.photos) {
-                    gallery.photos = body.photos;
+                    gallery.photos = {
+                        address: req.body.name,
+                    };
                 }
                 return [4 /*yield*/, gallery.save()];
             case 3:
@@ -135,7 +137,7 @@ var UpdateGallery = function (req, res, next) { return __awaiter(void 0, void 0,
             case 4:
                 _a = _b.sent();
                 res.status(404);
-                res.send({ error: "Gallery doeasn't exist." });
+                res.send({ error: "Gallery doesn't exist." });
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }

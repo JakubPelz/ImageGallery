@@ -1,7 +1,5 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../components/assets/home.css';
-import Carousel from '../components/Carousel';
 
 const Home = () => {
   return (

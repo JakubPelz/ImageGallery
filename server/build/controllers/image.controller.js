@@ -42,27 +42,37 @@ var stream = require('stream');
 var Gallery = require('../models/Gallery');
 var Image = require('../models/Image');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var file, newImage, err_1;
+    var gallery, file, newImage, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 4, , 5]);
-                if (!!req.files) return [3 /*break*/, 1];
+                _a.trys.push([0, 6, , 7]);
+                return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
+            case 1:
+                gallery = _a.sent();
+                if (!!req.files) return [3 /*break*/, 2];
                 res.send({
                     status: false,
                     message: 'No file uploaded',
                 });
-                return [3 /*break*/, 3];
-            case 1:
+                return [3 /*break*/, 5];
+            case 2:
                 file = req.files.file;
                 newImage = Image({
                     address: file.name,
                     gallery_id: req.params.id,
                 });
                 return [4 /*yield*/, newImage.save()];
-            case 2:
+            case 3:
                 _a.sent();
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
+                //save Image to Gallery subCollection
+                gallery.photos.push({
+                    address: file.name,
+                });
+                return [4 /*yield*/, gallery.save()];
+            case 4:
+                _a.sent();
                 file.mv('./images/' + file.name);
                 //send response
                 res.send({
@@ -80,13 +90,13 @@ var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
                         mv: file.mv,
                     },
                 });
-                _a.label = 3;
-            case 3: return [3 /*break*/, 5];
-            case 4:
+                _a.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
                 err_1 = _a.sent();
                 res.status(500).send(err_1);
-                return [3 /*break*/, 5];
-            case 5:
+                return [3 /*break*/, 7];
+            case 7:
                 console.log(req.params.id);
                 return [2 /*return*/];
         }
