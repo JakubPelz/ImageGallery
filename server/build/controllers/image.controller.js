@@ -36,44 +36,54 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeletePhotoFromGallery = exports.DeletePhotoFromImages = exports.ShowAllImages = exports.ShowImages = exports.UploadImage = void 0;
+exports.GalleryImageUpdate = exports.DeletePhotoFromGallery = exports.DeletePhotoFromImages = exports.ShowAllImages = exports.ShowImages = exports.UploadImage = void 0;
 var fs = require('fs');
 var stream = require('stream');
 var Gallery = require('../models/Gallery');
 var Image = require('../models/Image');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var gallery, file, newImage, err_1;
+    var file, newImage, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 6, , 7]);
-                return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
-            case 1:
-                gallery = _a.sent();
-                if (!!req.files) return [3 /*break*/, 2];
+                _a.trys.push([0, 4, , 5]);
+                if (!!req.files) return [3 /*break*/, 1];
                 res.send({
                     status: false,
                     message: 'No file uploaded',
                 });
-                return [3 /*break*/, 5];
-            case 2:
+                return [3 /*break*/, 3];
+            case 1:
                 file = req.files.file;
                 newImage = Image({
                     address: file.name,
                     gallery_id: req.params.id,
                 });
                 return [4 /*yield*/, newImage.save()];
-            case 3:
+            case 2:
                 _a.sent();
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 //save Image to Gallery subCollection
-                gallery.photos.push({
-                    address: file.name,
-                });
-                return [4 /*yield*/, gallery.save()];
-            case 4:
-                _a.sent();
-                file.mv('./images/' + file.name);
+                /* let ImageAddress = file.name.toString();
+                   Gallery.update(
+                  { _id: req.params.id },
+                  {
+                    $addToSet: {
+                      photos: {
+                        address: ImageAddress,
+                        name: file.name,
+                      },
+                    },
+                  },
+                  { upsert: true },
+                  function (error: string, success: string) {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log(success);
+                    }
+                  }
+                ); */
                 //send response
                 res.send({
                     status: true,
@@ -90,15 +100,13 @@ var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
                         mv: file.mv,
                     },
                 });
-                _a.label = 5;
-            case 5: return [3 /*break*/, 7];
-            case 6:
+                _a.label = 3;
+            case 3: return [3 /*break*/, 5];
+            case 4:
                 err_1 = _a.sent();
                 res.status(500).send(err_1);
-                return [3 /*break*/, 7];
-            case 7:
-                console.log(req.params.id);
-                return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
@@ -135,8 +143,32 @@ var ShowAllImages = function (req, res) { return __awaiter(void 0, void 0, void 
 }); };
 exports.ShowAllImages = ShowAllImages;
 var DeletePhotoFromImages = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        return [2 /*return*/];
+    var gallery, imageIndex, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
+            case 1:
+                gallery = _b.sent();
+                imageIndex = gallery.photos.findIndex(function (photo) { return photo.id === req.params.idPhoto; });
+                if (imageIndex < 0) {
+                    res.status(404);
+                    res.send({ error: "Photo doesn't exist." });
+                }
+                gallery.photos.splice(imageIndex, 1);
+                return [4 /*yield*/, gallery.save()];
+            case 2:
+                _b.sent();
+                res.send(gallery);
+                return [3 /*break*/, 4];
+            case 3:
+                _a = _b.sent();
+                res.status(404);
+                res.send({ error: "Gallery doeasn't exist." });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
     });
 }); };
 exports.DeletePhotoFromImages = DeletePhotoFromImages;
@@ -161,3 +193,32 @@ var DeletePhotoFromGallery = function (req, res) { return __awaiter(void 0, void
     });
 }); };
 exports.DeletePhotoFromGallery = DeletePhotoFromGallery;
+var GalleryImageUpdate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: 
+            // @ts-ignore
+            //console.log(req.files.file);
+            //const gallery = await Gallery.findById({ _id: req.params.id });
+            return [4 /*yield*/, Gallery.updateOne({ _id: req.params.id }, { $addToSet: { photos: { address: 'ahoj' } } }, {
+                    upsert: true,
+                    new: true,
+                })
+                    .then(function (result) {
+                    console.log("Content Posted " + result);
+                    res.send({ status: 'success' });
+                })
+                    .catch(function (error) {
+                    console.log("Error " + error);
+                    res.send({ status: 'fail' });
+                })];
+            case 1:
+                // @ts-ignore
+                //console.log(req.files.file);
+                //const gallery = await Gallery.findById({ _id: req.params.id });
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.GalleryImageUpdate = GalleryImageUpdate;

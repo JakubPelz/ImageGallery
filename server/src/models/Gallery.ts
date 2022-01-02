@@ -4,10 +4,10 @@ const ImageSchema = new mongoose.Schema({
   address: {
     type: String,
   },
-  register_date: {
+  /* register_date: {
     type: Date,
     default: Date.now,
-  },
+  }, */
 });
 
 const gallerySchema = new mongoose.Schema({
@@ -20,7 +20,17 @@ const gallerySchema = new mongoose.Schema({
   gallery_description: {
     type: String,
   },
-  photos: [ImageSchema],
+  photos: [
+    {
+      address: {
+        type: String,
+      },
+      register_date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model('Gallery', gallerySchema);

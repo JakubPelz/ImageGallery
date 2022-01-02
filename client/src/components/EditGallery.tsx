@@ -61,6 +61,7 @@ const EditGallery = () => {
     formData.append('file', e.target.files[0]);
     try {
       await axios.post(`${getBasePath()}/api/${galleryId}/photo`, formData);
+      await axios.put(`${getBasePath()}/api/${galleryId}/photo`, formData);
     } catch (e) {
       console.log('e', e);
     }
@@ -109,6 +110,7 @@ const EditGallery = () => {
                           name="image"
                           multiple
                           onChange={onChange}
+
                           /* async (e) => {
                             const formData = new FormData();
                             // @ts-ignore

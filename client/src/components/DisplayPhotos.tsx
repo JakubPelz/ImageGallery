@@ -3,6 +3,7 @@ import { Image } from '../reducers/actions';
 import axios from 'axios';
 import { getBasePath, getImagePath } from '../utils/PathHelper';
 import { useParams } from 'react-router-dom';
+import '../components/assets/lightBox.css';
 
 export interface IShowPhotos {
   photos: Image[];
@@ -43,8 +44,8 @@ const DisplayPhotos = (props: IShowPhotos) => {
             <img
               src={`${getImagePath()}${image.address}`}
               className="ui small bordered image"
-              id="ResizeImage"
               alt={image.address}
+              id="ResizeImage"
               onClick={handleOnItemclick}
               key={index}
             />
