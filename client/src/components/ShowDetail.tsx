@@ -31,19 +31,12 @@ const ShowDetail = (props: any) => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(`${getBasePath()}/api/images`);
-      setPhotos(data);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    (async () => {
       const { data } = await axios.get(`${getBasePath()}/api/gallery/${id}`);
 
       setGalleryName(data.gallery_name);
       setGalleryDescription(data.gallery_description);
       setID(data._id);
+      setPhotos(data.photos);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -86,7 +79,12 @@ const ShowDetail = (props: any) => {
             <div className="ui bottom attached buttons" id="buttonField">
               <Link to={`/gallery/edit/${galleryId}`}>
                 <button className="ui button" id="buttonDetail">
-                  Edit Gallery || Add Image
+                  Edit Gallery
+                </button>
+              </Link>
+              <Link to={`/gallery/addPhoto/${galleryId}`}>
+                <button className="ui button" id="buttonDetail">
+                  Add Image
                 </button>
               </Link>
               <button

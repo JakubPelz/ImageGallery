@@ -21,7 +21,7 @@ var galleryRoutes = function (router) {
 exports.galleryRoutes = galleryRoutes;
 var imageRoutes = function (router) {
     router.post('/api/:id/photo', image_controller_1.UploadImage);
-    router.put('/api/:id/photo', image_controller_1.GalleryImageUpdate);
+    router.patch('/api/:id/addPhoto', image_controller_1.GalleryImageUpdate);
     router.get('/api/photos/:path', image_controller_1.ShowImages);
     router.get('/api/images', image_controller_1.ShowAllImages);
     router.delete('/api/gallery/:id/photo/:idPhoto', image_controller_1.DeletePhotoFromGallery);

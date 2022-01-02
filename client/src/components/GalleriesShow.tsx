@@ -1,7 +1,13 @@
 import ImageMain from '../components/assets/images/image-text.png';
 import '../components/assets/showGalleries.css';
 import { Link } from 'react-router-dom';
-import { Gallery, ShowGalleries } from '../reducers/actions';
+import { Gallery, ShowGalleries, Image } from '../reducers/actions';
+
+export interface ImageDisplay {
+  address: string;
+  _id: any;
+  register_date: Date;
+}
 
 const GalleriesShow = (props: ShowGalleries) => {
   return (
@@ -16,8 +22,18 @@ const GalleriesShow = (props: ShowGalleries) => {
                     src={ImageMain}
                     className="ui small image"
                     id="alignedItem"
-                    alt={gallery.gallery_name}
+                    alt={'lala'}
                   />
+                  {/* {gallery.photos.map((image: Image) => {
+                    return (
+                      <img
+                        src={ImageMain}
+                        className="ui small image"
+                        id="alignedItem"
+                        alt={'lala'}
+                      />
+                    );
+                  })} */}
                 </div>
                 <div>
                   <h3>"{gallery.gallery_name}"</h3>

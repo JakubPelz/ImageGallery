@@ -55,18 +55,6 @@ const EditGallery = () => {
     return <Navigate to={'/show-galleries'} />;
   }
 
-  const onChange = async (e: any) => {
-    const formData = new FormData();
-    // @ts-ignore
-    formData.append('file', e.target.files[0]);
-    try {
-      await axios.post(`${getBasePath()}/api/${galleryId}/photo`, formData);
-      await axios.put(`${getBasePath()}/api/${galleryId}/photo`, formData);
-    } catch (e) {
-      console.log('e', e);
-    }
-  };
-
   return (
     <div>
       <div className="ui vertical footer segment" id="margin-top">
@@ -101,34 +89,6 @@ const EditGallery = () => {
                       />
                     }
                   </div>
-                  {
-                    <div>
-                      Upload Image
-                      <div>
-                        <input
-                          type="file"
-                          name="image"
-                          multiple
-                          onChange={onChange}
-
-                          /* async (e) => {
-                            const formData = new FormData();
-                            // @ts-ignore
-                            formData.append('file', e.target.files[0]);
-                            try {
-                              await axios.post(
-                                `${getBasePath()}/api/photo`,
-                                formData
-                              );
-                            } catch (e) {
-                              console.log('e', e);
-                            }
-                          } */
-                        />
-                        Add Images
-                      </div>
-                    </div>
-                  }
                   <button className="ui button" type="submit" id="submit">
                     Submit
                   </button>

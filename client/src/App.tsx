@@ -13,6 +13,7 @@ import Nav from './pages/Nav';
 import LogIn from './pages/LogIn';
 import ShowDetail from './components/ShowDetail';
 import EditGallery from './components/EditGallery';
+import AddPhoto from './components/AddPhoto';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/gallery/:id" element={<ShowDetail />} />;
         <Route path="/gallery/edit/:id" element={<EditGallery />} />;
+        <Route path="/gallery/addPhoto/:id" element={<AddPhoto />} />;
       </Routes>
     </BrowserRouter>
   );

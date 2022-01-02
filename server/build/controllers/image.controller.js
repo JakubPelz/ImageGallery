@@ -63,27 +63,7 @@ var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
             case 2:
                 _a.sent();
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
-                //save Image to Gallery subCollection
-                /* let ImageAddress = file.name.toString();
-                   Gallery.update(
-                  { _id: req.params.id },
-                  {
-                    $addToSet: {
-                      photos: {
-                        address: ImageAddress,
-                        name: file.name,
-                      },
-                    },
-                  },
-                  { upsert: true },
-                  function (error: string, success: string) {
-                    if (error) {
-                      console.log(error);
-                    } else {
-                      console.log(success);
-                    }
-                  }
-                ); */
+                file.mv('./images/' + file.name);
                 //send response
                 res.send({
                     status: true,
@@ -194,17 +174,18 @@ var DeletePhotoFromGallery = function (req, res) { return __awaiter(void 0, void
 }); };
 exports.DeletePhotoFromGallery = DeletePhotoFromGallery;
 var GalleryImageUpdate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var gallery;
+    var gallery, file;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
             case 1:
                 gallery = _a.sent();
-                gallery._doc.photos.push({ address: 'Ahoj', name: 'Nazdar' });
+                file = req.files.file;
+                gallery._doc.photos.push({ address: file.name });
                 gallery
                     .save()
                     .then(function (result) {
-                    console.log("Content Posted " + result);
+                    // console.log(`Content Posted ${result}`);
                     res.send({ status: 'success' });
                 })
                     .catch(function (error) {

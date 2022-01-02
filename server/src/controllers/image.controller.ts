@@ -39,29 +39,7 @@ export const UploadImage = async (req: Request, res: Response) => {
       });
       await newImage.save();
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
-
-      //save Image to Gallery subCollection
-      /* let ImageAddress = file.name.toString();
-         Gallery.update(
-        { _id: req.params.id },
-        {
-          $addToSet: {
-            photos: {
-              address: ImageAddress,
-              name: file.name,
-            },
-          },
-        },
-        { upsert: true },
-        function (error: string, success: string) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(success);
-          }
-        }
-      ); */
-
+      file.mv('./images/' + file.name);
       //send response
       res.send({
         status: true,
@@ -147,12 +125,15 @@ export const GalleryImageUpdate = async (req: Request, res: Response) => {
   //console.log(req.files.file);
   const gallery = await Gallery.findById({ _id: req.params.id });
 
-  gallery._doc.photos.push({ address: 'Ahoj', name: 'Nazdar' });
+  // @ts-ignore
+  let file = req.files.file;
+
+  gallery._doc.photos.push({ address: file.name });
 
   gallery
     .save()
     .then((result: any) => {
-      console.log(`Content Posted ${result}`);
+      // console.log(`Content Posted ${result}`);
       res.send({ status: 'success' });
     })
     .catch((error: any) => {

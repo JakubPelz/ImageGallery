@@ -4,9 +4,6 @@ const ImageSchema = new mongoose.Schema({
   address: {
     type: String,
   },
-  name: {
-    type: String,
-  },
   register_date: {
     type: Date,
     default: Date.now,

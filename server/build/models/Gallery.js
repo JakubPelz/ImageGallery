@@ -5,9 +5,6 @@ var ImageSchema = new __1.mongoose.Schema({
     address: {
         type: String,
     },
-    name: {
-        type: String,
-    },
     register_date: {
         type: Date,
         default: Date.now,
