@@ -145,16 +145,12 @@ export const DeletePhotoFromGallery = async (req: Request, res: Response) => {
 export const GalleryImageUpdate = async (req: Request, res: Response) => {
   // @ts-ignore
   //console.log(req.files.file);
-  //const gallery = await Gallery.findById({ _id: req.params.id });
+  const gallery = await Gallery.findById({ _id: req.params.id });
 
-  await Gallery.updateOne(
-    { _id: req.params.id },
-    { $addToSet: { photos: { address: 'ahoj' } } },
-    {
-      upsert: true,
-      new: true,
-    }
-  )
+  gallery._doc.photos.push({ address: 'Ahoj', name: 'Nazdar' });
+
+  gallery
+    .save()
     .then((result: any) => {
       console.log(`Content Posted ${result}`);
       res.send({ status: 'success' });
@@ -163,40 +159,4 @@ export const GalleryImageUpdate = async (req: Request, res: Response) => {
       console.log(`Error ${error}`);
       res.send({ status: 'fail' });
     });
-
-  /*  let newGalleryImage = {
-    address: 'Nasrat',
-    date: Date.now(),
-  };
-  Gallery.update(
-    { _id: req.params.id },
-    {
-      $addToSet: {
-        photos: { address: 'nasrat' },
-      },
-    },
-    function (error: string, success: string) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(success);
-      }
-    }
-  ); */
-
-  // @ts-ignore
-  /*let file = req.files.file;
-  try {
-    if (gallery.photos) {
-      gallery.photos = {
-        address: file.name,
-      };
-    }
-
-    await gallery.save();
-    res.send(gallery);
-  } catch {
-    res.status(404);
-    res.send({ error: "Photo doesn't exist." });
-  }*/
 };

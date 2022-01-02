@@ -194,16 +194,15 @@ var DeletePhotoFromGallery = function (req, res) { return __awaiter(void 0, void
 }); };
 exports.DeletePhotoFromGallery = DeletePhotoFromGallery;
 var GalleryImageUpdate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var gallery;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: 
-            // @ts-ignore
-            //console.log(req.files.file);
-            //const gallery = await Gallery.findById({ _id: req.params.id });
-            return [4 /*yield*/, Gallery.updateOne({ _id: req.params.id }, { $addToSet: { photos: { address: 'ahoj' } } }, {
-                    upsert: true,
-                    new: true,
-                })
+            case 0: return [4 /*yield*/, Gallery.findById({ _id: req.params.id })];
+            case 1:
+                gallery = _a.sent();
+                gallery._doc.photos.push({ address: 'Ahoj', name: 'Nazdar' });
+                gallery
+                    .save()
                     .then(function (result) {
                     console.log("Content Posted " + result);
                     res.send({ status: 'success' });
@@ -211,12 +210,7 @@ var GalleryImageUpdate = function (req, res) { return __awaiter(void 0, void 0, 
                     .catch(function (error) {
                     console.log("Error " + error);
                     res.send({ status: 'fail' });
-                })];
-            case 1:
-                // @ts-ignore
-                //console.log(req.files.file);
-                //const gallery = await Gallery.findById({ _id: req.params.id });
-                _a.sent();
+                });
                 return [2 /*return*/];
         }
     });

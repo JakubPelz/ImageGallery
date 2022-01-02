@@ -5,10 +5,13 @@ var ImageSchema = new __1.mongoose.Schema({
     address: {
         type: String,
     },
-    /* register_date: {
-      type: Date,
-      default: Date.now,
-    }, */
+    name: {
+        type: String,
+    },
+    register_date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 var gallerySchema = new __1.mongoose.Schema({
     gallery_name: {
@@ -20,16 +23,7 @@ var gallerySchema = new __1.mongoose.Schema({
     gallery_description: {
         type: String,
     },
-    photos: [
-        {
-            address: {
-                type: String,
-            },
-            register_date: {
-                type: Date,
-                default: Date.now,
-            },
-        },
-    ],
+    photos: [ImageSchema],
+    required: false,
 });
 module.exports = __1.mongoose.model('Gallery', gallerySchema);
