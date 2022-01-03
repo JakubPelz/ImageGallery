@@ -14,9 +14,6 @@ export const CreateGallery = async (req: Request, res: Response) => {
   let newGallery = Gallery({
     gallery_name: body.gallery_name,
     gallery_description: body.gallery_description,
-    photos: {
-      address: 'ImageMain',
-    },
   });
   await newGallery.save((err: String) => {
     if (err) {

@@ -52,9 +52,6 @@ var CreateGallery = function (req, res) { return __awaiter(void 0, void 0, void 
                 newGallery = Gallery({
                     gallery_name: body.gallery_name,
                     gallery_description: body.gallery_description,
-                    photos: {
-                        address: 'ImageMain',
-                    },
                 });
                 return [4 /*yield*/, newGallery.save(function (err) {
                         if (err) {

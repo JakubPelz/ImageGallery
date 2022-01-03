@@ -19,8 +19,8 @@ const GalleriesShow = (props: ShowGalleries) => {
             <div className="ui card" id="card">
               <div className="content">
                 <div className="header">
-                  {gallery.photos[0].address === null ||
-                  gallery.photos[0].address === undefined ? (
+                  {gallery.photos[0] === null ||
+                  gallery.photos[0] === undefined ? (
                     <img
                       src={ImageMain}
                       className="ui small image"
