@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
-    "@iconify/icons-bi": "^1.1.12"
+    "@iconify/icons-bi": "^1.1.12",
+    "@types/simple-react-lightbox": "^3.6.1"
   }
 }

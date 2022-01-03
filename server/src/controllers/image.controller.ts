@@ -33,11 +33,11 @@ export const UploadImage = async (req: Request, res: Response) => {
       // Use name of the input field to retrive the uploaded field
       // @ts-ignore
       let file = req.files.file;
-      let newImage = Image({
+      /* let newImage = Image({
         address: file.name,
         gallery_id: req.params.id,
       });
-      await newImage.save();
+      await newImage.save(); */
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
       file.mv('./images/' + file.name);
       //send response
@@ -107,16 +107,6 @@ export const DeletePhotoFromImages = async (req: Request, res: Response) => {
   } catch {
     res.status(404);
     res.send({ error: "Gallery doeasn't exist." });
-  }
-};
-
-export const DeletePhotoFromGallery = async (req: Request, res: Response) => {
-  try {
-    await Image.deleteOne({ _id: req.params.id });
-    res.status(204).send();
-  } catch {
-    res.status(404);
-    res.send({ error: "Image doesn't exist." });
   }
 };
 

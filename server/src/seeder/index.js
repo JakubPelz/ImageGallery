@@ -4,7 +4,7 @@
     gallery_description: faker.lorem.words(20),
     photos: [
       {
-        address: faker.image.imageUrl(200, 200, '', true),
+        address: StarWars.jpeg,
       },
     ]
   });

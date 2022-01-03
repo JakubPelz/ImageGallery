@@ -14,6 +14,9 @@ export const CreateGallery = async (req: Request, res: Response) => {
   let newGallery = Gallery({
     gallery_name: body.gallery_name,
     gallery_description: body.gallery_description,
+    photos: {
+      address: 'ImageMain',
+    },
   });
   await newGallery.save((err: String) => {
     if (err) {
@@ -59,12 +62,6 @@ export const UpdateGallery = async (req: Request, res: Response, next: any) => {
 
     if (body.gallery_name) {
       gallery.gallery_name = body.gallery_name;
-    }
-
-    if (body.photos) {
-      gallery.photos = {
-        address: req.body.name,
-      };
     }
 
     await gallery.save();

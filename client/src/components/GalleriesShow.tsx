@@ -2,6 +2,7 @@ import ImageMain from '../components/assets/images/image-text.png';
 import '../components/assets/showGalleries.css';
 import { Link } from 'react-router-dom';
 import { Gallery, ShowGalleries, Image } from '../reducers/actions';
+import { getImagePath } from '../utils/PathHelper';
 
 export interface ImageDisplay {
   address: string;
@@ -18,22 +19,28 @@ const GalleriesShow = (props: ShowGalleries) => {
             <div className="ui card" id="card">
               <div className="content">
                 <div className="header">
-                  <img
-                    src={ImageMain}
+                  {gallery.photos[0].address === null ||
+                  gallery.photos[0].address === undefined ? (
+                    <img
+                      src={ImageMain}
+                      className="ui small image"
+                      id="alignedItem"
+                      alt={'FakeImage'}
+                    />
+                  ) : (
+                    <img
+                      src={`${getImagePath()}${gallery.photos[0].address}`}
+                      className="ui small image"
+                      id="alignedItem"
+                      alt={'haha'}
+                    />
+                  )}
+                  {/* <img
+                    src={`${getImagePath()}${gallery.photos[0].address}`}
                     className="ui small image"
                     id="alignedItem"
-                    alt={'lala'}
-                  />
-                  {/* {gallery.photos.map((image: Image) => {
-                    return (
-                      <img
-                        src={ImageMain}
-                        className="ui small image"
-                        id="alignedItem"
-                        alt={'lala'}
-                      />
-                    );
-                  })} */}
+                    alt={gallery.photos[0].address}
+                  /> */}
                 </div>
                 <div>
                   <h3>"{gallery.gallery_name}"</h3>

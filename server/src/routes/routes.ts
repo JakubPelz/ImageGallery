@@ -15,7 +15,6 @@ import {
 import {
   UploadImage,
   ShowImages,
-  DeletePhotoFromGallery,
   DeletePhotoFromImages,
   GalleryImageUpdate,
   ShowAllImages,
@@ -41,6 +40,5 @@ export const imageRoutes = (router: Router) => {
   router.patch('/api/:id/addPhoto', GalleryImageUpdate);
   router.get('/api/photos/:path', ShowImages);
   router.get('/api/images', ShowAllImages);
-  router.delete('/api/gallery/:id/photo/:idPhoto', DeletePhotoFromGallery);
-  router.delete('/api/photo/:id', DeletePhotoFromGallery);
+  router.delete('/api/gallery/:id/photo/:idPhoto', DeletePhotoFromImages);
 };

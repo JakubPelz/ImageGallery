@@ -36,32 +36,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GalleryImageUpdate = exports.DeletePhotoFromGallery = exports.DeletePhotoFromImages = exports.ShowAllImages = exports.ShowImages = exports.UploadImage = void 0;
+exports.GalleryImageUpdate = exports.DeletePhotoFromImages = exports.ShowAllImages = exports.ShowImages = exports.UploadImage = void 0;
 var fs = require('fs');
 var stream = require('stream');
 var Gallery = require('../models/Gallery');
 var Image = require('../models/Image');
 var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var file, newImage, err_1;
+    var file;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 4, , 5]);
-                if (!!req.files) return [3 /*break*/, 1];
+        // @ts-ignore
+        //console.log(req.files.file);
+        try {
+            if (!req.files) {
                 res.send({
                     status: false,
                     message: 'No file uploaded',
                 });
-                return [3 /*break*/, 3];
-            case 1:
+            }
+            else {
                 file = req.files.file;
-                newImage = Image({
-                    address: file.name,
-                    gallery_id: req.params.id,
+                /* let newImage = Image({
+                  address: file.name,
+                  gallery_id: req.params.id,
                 });
-                return [4 /*yield*/, newImage.save()];
-            case 2:
-                _a.sent();
+                await newImage.save(); */
                 //Use the mv() method to place the file in upload directory (i.e. "uploads")
                 file.mv('./images/' + file.name);
                 //send response
@@ -80,14 +78,12 @@ var UploadImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
                         mv: file.mv,
                     },
                 });
-                _a.label = 3;
-            case 3: return [3 /*break*/, 5];
-            case 4:
-                err_1 = _a.sent();
-                res.status(500).send(err_1);
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+            }
         }
+        catch (err) {
+            res.status(500).send(err);
+        }
+        return [2 /*return*/];
     });
 }); };
 exports.UploadImage = UploadImage;
@@ -152,27 +148,6 @@ var DeletePhotoFromImages = function (req, res) { return __awaiter(void 0, void 
     });
 }); };
 exports.DeletePhotoFromImages = DeletePhotoFromImages;
-var DeletePhotoFromGallery = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, Image.deleteOne({ _id: req.params.id })];
-            case 1:
-                _b.sent();
-                res.status(204).send();
-                return [3 /*break*/, 3];
-            case 2:
-                _a = _b.sent();
-                res.status(404);
-                res.send({ error: "Image doesn't exist." });
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.DeletePhotoFromGallery = DeletePhotoFromGallery;
 var GalleryImageUpdate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var gallery, file;
     return __generator(this, function (_a) {
